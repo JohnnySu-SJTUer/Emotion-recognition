@@ -1,8 +1,6 @@
 # # ******************************* Keras FER2013 Emotion Recognition ************************************
-from keras.datasets import mnist
 import numpy as np
 np.random.seed(1337)  # for reproducibility
-from keras.datasets import mnist
 from keras.utils import np_utils
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Convolution2D, MaxPooling2D, Flatten, BatchNormalization, Dropout, Flatten
@@ -28,7 +26,7 @@ model = Sequential()
 model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same', input_shape = (1, 48, 48))) #1：channels; 48:尺寸
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 # conv2 layer
 model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same', input_shape = (128, 48, 48))) #1：channels; 48:尺寸
 model.add(BatchNormalization())
@@ -38,7 +36,7 @@ model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size = (2, 2), strides = (2, 2), border_mode = 'same'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 # conv4 layer
 model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same', input_shape = (128, 24, 24))) #1：channels; 24:尺寸
 model.add(BatchNormalization())
@@ -48,7 +46,7 @@ model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size = (2, 2), strides = (2, 2), border_mode = 'same'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 # conv6 layer
 model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same', input_shape = (128, 12, 12))) #1：channels; 12:尺寸
 model.add(BatchNormalization())
@@ -58,23 +56,23 @@ model.add(Convolution2D(filters = 128, kernel_size = (4, 4), border_mode = 'same
 model.add(BatchNormalization())
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size = (2, 2), strides = (2, 2), border_mode = 'same'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 model.add(Flatten())
 # full connected layer 1
 model.add(Dense(1024))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 # full connected layer 2
 model.add(Dense(1024))
 model.add(BatchNormalization())
 model.add(Activation('relu'))
-model.add(Dropout(0.8))
+model.add(Dropout(0.2))
 # output layer
 model.add(Dense(7))
 model.add(Activation('softmax'))
 
-adam = Adam(lr = 1e-3)
+adam = Adam(lr = 1e-4)
 model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
 model.fit(trainval_imgs, trainval_labels, epochs=100, batch_size=512, validation_split=0.1, shuffle=True)
